@@ -62,7 +62,7 @@ func checkoutBook(c *gin.Context) {
 	book.Quantity -= 1
 	_, err = editBookInDB(*book)
 	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Fail to checkout."})
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "Fail to checkout."})
 		return
 	}
 
@@ -87,7 +87,7 @@ func returnBook(c *gin.Context) {
 	book.Quantity += 1
 	_, err = editBookInDB(*book)
 	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Fail to return."})
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "Fail to return."})
 		return
 	}
 
