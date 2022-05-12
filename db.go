@@ -22,15 +22,16 @@ func openDB() *gorm.DB {
 	return db
 }
 
-func getBooksFromDB() []Book {
+func getBooksFromDB() ([]Book, error) {
 	books := []Book{}
 	result := db.Find(&books) // SELECT * FROM book
 
 	if result.Error != nil {
 		log.Println("fail to get result from db")
+		return nil, errors.New("fail to get books from db")
 	}
 
-	return books
+	return books, nil
 }
 
 // return *Book so that we can modify the attributes of book in a different function

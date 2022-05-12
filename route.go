@@ -8,7 +8,14 @@ import (
 
 // *gin.Context contains all of the information about the request
 func getBooks(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, getBooksFromDB())
+	books, err := getBooksFromDB()
+
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "Fail to retrieve list of books"})
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, books)
 }
 
 func getBookById(c *gin.Context) {
